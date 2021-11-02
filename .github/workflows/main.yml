@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET SDK 5.0.x
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: "5.0.x"
       # publishes Blazor project to the release folder
       - name: Publish .NET Project
         run: dotnet publish BlazorGitHubPagesDemo.csproj -c Release -o release --nologo
@@ -24,6 +24,6 @@ jobs:
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages # The branch the action should deploy to.
           folder: release/wwwroot # The folder the action should deploy.
