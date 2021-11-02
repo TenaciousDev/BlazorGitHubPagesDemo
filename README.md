@@ -304,7 +304,9 @@ jobs:
 
 Once you're satisfied that everything is correct, it's time to commit our changes! If you've been writing this in the GitHub text editor, you can use the same interface to create a fresh commit. If you switched to a local IDE like VS Code, you can add your changes, make a new commit, and push to the remote repository.
 
-After you've pushed your changes to GitHub, navigate back to the **Actions** tab. You should see your workflow running, or possibly already complete. Now all that's left is to configure GitHub Pages!
+![deploy-to-github-pages](wwwroot/assets/deploy-to-github-pages-running.png)
+
+After you've pushed your changes to GitHub, navigate back to the **Actions** tab. You should see your workflow running as shown in the image above, or possibly already complete. Now all that's left is to configure GitHub Pages!
 
 Navigte to **Settings > Pages**, and under _Source_ select the `gh-pages` branch, and click the _Save_ button. And boom! Your site will be published in a few moments!
 
