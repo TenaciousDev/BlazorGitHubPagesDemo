@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 # Run workflow on every push to the main branch
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy-to-github-pages:
@@ -15,7 +15,8 @@ jobs:
       # sets up .NET SDK 5.0.10
       - name: SEtup .NET SDK 5.0.10
         uses: actions/setup-dotnet@v1
-        with: dotnet-version: 5.0.10
+        with:
+          dotnet-version: 5.0.10
       # publishes Blazor project to the release folder
       - name: Publish .NET Project
         run: dotnet publish BlazorGitHubPagesDemo.csproj -c Release -0 release --nologo
