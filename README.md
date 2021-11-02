@@ -56,7 +56,7 @@ dotnet watch run
 
 Running either of these should cause your default browser to open in either a new window or a new tab. The default view of the Blazor App should look like this:
 
-![Blazor App Default View](wwwroot\assets\BlazorDefaultImage.png)
+![Blazor App Default View](wwwroot/assets/BlazorDefaultImage.png)
 
 Once you've verified that your Blazor WebAssembly is configured correctly, you can use `Ctrl + C` in your CLI to stop the application from running and proceed to the next step.
 
