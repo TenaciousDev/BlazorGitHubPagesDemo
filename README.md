@@ -209,7 +209,7 @@ We want to publish our Blazor project to the `release` output folder using the `
 
 > Note: the `--no-logo` flag may not be absolutely necessary here, but it prevents some unneccesary lines from being output to the console
 
-Now, we need to prevent a major issue! Because of the way GitHub Pages structures it's subdirectories, if we leave our `wwwroot/index.html` file as it is right now, the application will try to grab its resources from `<username>.github.io`, because that's the root of the website. But unless we're deploying this application to that address - which we're not, or at least we shouldn't be - that isn't going to work.
+Now, we need to prevent a major issue! Because of the way GitHub Pages structures its subdirectories, if we leave our `wwwroot/index.html` file as it is right now, the application will try to grab its resources from `<username>.github.io`, because that's the root of the website. But unless we're deploying this application to that address - which we're not, or at least we shouldn't be - that isn't going to work.
 
 We _could_ just go in to the `index.html` file and edit it directly, but if we do that we won't be able to run the application locally. There may be more than one solution to this issue, but for this walkthrough, we'll solve it by having our next step make a change to the `<base />` tag of `index.html`. Because this takes place as part of our GitHub actions _only when we push to `main`_, and because we'll be publishing our static files inside the `wwwroot` directory to a separate branch, this won't effect our local version of the file! Add the following code:
 
@@ -219,7 +219,7 @@ We _could_ just go in to the `index.html` file and edit it directly, but if we d
   run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorGitHubPagesDemo\/" \/>/g' release/wwwroot/index.html
 ```
 
-The next step is more of a housekeeping issue. GitHub automatically directs any request that returns a `404` response to the GitHub-specific 404 page. If one of our users requests a resource we don't have, this could yank them away from our application, which isn't the end of the world, but it's not a great user experience. For now, we'll run a command that will simply redirect any users that encounter a `404` rsponse, back to our main page. Add this code:
+The next step is more of a housekeeping issue. GitHub automatically directs any request that returns a `404` response to the GitHub-specific 404 page. If one of our users requests a resource we don't have, this could yank them away from our application, which isn't the end of the world, but it's also not a great user experience. For now, we'll run a command that will simply redirect any users that encounter a `404` response, back to our main page. Add this code:
 
 ```yml
 # copy index.html to 404.html to serve the same file when a file is not found
@@ -227,7 +227,7 @@ The next step is more of a housekeeping issue. GitHub automatically directs any 
   run: cp release/wwwroot/index.html release/wwwroot/404.html
 ```
 
-And another housekeeping step: we need to talk about underscores.
+Okay, it's time: we need to talk about underscores.
 
 GitHub Pages uses [Jekyll](https://jekyllrb.com/) by default, and Jekyll is a wonderful tool for hosting static sites. The problem is that Jekyll ignores folders or files that start with an underscore. And when we publish our app with Blazor, the publisher creates a directory starting with, you guessed it, an underscore! This directory is `wwwroot/_framework`, and it's crucial to our application. We're gonna need a workaround.
 
@@ -241,7 +241,7 @@ Thankfully, GitHub solved this particular issue for us [back in 2009](https://gi
 
 We're almost there! Now all we need is to publish the `wwwroot` directory, which contains our static files, to GitHub Pages via our `gh-pages` branch. We'll use a handy predefined action as part of this, [courtesy of James Ives](https://github.com/JamesIves/github-pages-deploy-action).
 
-We'll also use something called `GITHUB_TOKEN`, which is a secret variable automatically created at the beginning of a workflow run. used to authenticate the run. You can learn more about how this works in the [GitHub Docs](https://docs.github.com/en/actions/security-guides/automatic-token-authentication), but for now let's put this secret token to work! Add the following code:
+We'll also use something called `GITHUB_TOKEN`, which is a secret variable automatically created at the beginning of a workflow run, and is used to authenticate the run. You can learn more about how this works in the [GitHub Docs](https://docs.github.com/en/actions/security-guides/automatic-token-authentication), but for now let's put this secret token to work! Add the following code:
 
 ```yml
 # publishes wwwroot directory to GitHub Pages
