@@ -12,4 +12,17 @@ jobs:
     steps:
       # uses GitHub's checkout action to checkout code from the main branch
       - uses: actions/checkout@v2
-      # sets up .NET Core SDK 3.1
+      # sets up .NET SDK 5.0.10
+      - name: SEtup .NET SDK 5.0.10
+        uses: actions/setup-dotnet@v1
+        with: dotnet-version: 5.0.10
+      # publishes Blazor project to the release folder
+      - name: Publish .NET Project
+        run: dotnet publish BlazorGitHubPagesDemo.csproj -c Release -0 release --nologo
+      # publishes wwwroot directory to GitHub Pages
+      - name: Commit wwwroot to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages # The branch the action should deploy to.
+          folder: release/wwwroot # The folder the action should deploy.
