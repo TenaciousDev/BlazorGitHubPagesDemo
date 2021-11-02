@@ -32,14 +32,14 @@ jobs:
         run: cp release/wwwroot/index.html release/wwwroot/404.html
 
       # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
-        - name: Add .nojekyll file
-          run: touch release/wwwroot/.nojekyll
+      - name: Add .nojekyll file
+        run: touch release/wwwroot/.nojekyll
 
       # publishes wwwroot directory to GitHub Pages
-        - name: Commit wwwroot to GitHub Pages
-          uses: JamesIves/github-pages-deploy-action@4.1.5
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            branch: gh-pages # The branch the action should deploy to.
-            folder: release/wwwroot # The folder the action should deploy.
-            
+      - name: Commit wwwroot to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages # The branch the action should deploy to.
+          folder: release/wwwroot # The folder the action should deploy.
+
