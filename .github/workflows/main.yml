@@ -13,7 +13,7 @@ jobs:
       # uses GitHub's checkout action to checkout code from the main branch
       - uses: actions/checkout@v2
       # sets up .NET SDK 5.0.10
-      - name: SEtup .NET SDK 5.0.10
+      - name: SEtup .NET SDK 5.0.104
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.10
