@@ -1,7 +1,31 @@
 ﻿@page "/"
+@using Markdig;
+@using System.IO;
+@using System.Text;
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@Html
+
+@code {
+
+  public MarkupString Html { get; set; }
+
+  protected void DisplayFileContents(string fileContents)
+  {
+    Html = (MarkupString)Markdown.ToHtml(fileContents);
+  }
+
+  private static string path = @"C:/00_ElevenFifty/SD_Training/BlazorGitHubPagesDemo/wwwroot/md-assets/main.md";
+  static string contents = File.ReadAllText(path);
+
+  protected override void OnInitialized()
+  {
+    DisplayFileContents(contents);
+  }
+
+}
