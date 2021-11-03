@@ -1,0 +1,23 @@
+@page "/markdowneditor"
+@using Markdig;
+
+<h1>Markdown Editor in Blazor WebAssembly</h1>
+
+<p>Playing around with <a href="https://www.nuget.org/packages/Markdig/">Markdig</a>, we'll see what I do with it later.</p>
+
+<textarea rows="10" style="width: 500px;" @oninput="OnTextChanged"></textarea>
+
+<br />
+<hr />
+
+@Html
+
+@code {
+    public MarkupString Html { get; set; }
+
+    protected void OnTextChanged(ChangeEventArgs args)
+    {
+        Html = (MarkupString)Markdown.ToHtml(args.Value.ToString());
+        InvokeAsync(() => StateHasChanged());
+    }
+}
