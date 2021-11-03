@@ -1,7 +1,8 @@
 ﻿@page "/"
 @using Markdig;
-@using System.IO;
-@using System.Text;
+@using System.IO
+@inject HttpClient Http
+
 
 <h1>Hello, world!</h1>
 
@@ -12,20 +13,30 @@ Welcome to your new app.
 @Html
 
 @code {
-
+  private static string path =
+    "https://github.com/TenaciousDev/BlazorGitHubPagesDemo/blob/dc4e85f59db6780919b43a1fcfcf35f154dc9a96/wwwroot/md-assets/main.md";
   public MarkupString Html { get; set; }
 
+  protected async Task<string> GetFileContentsAsync(string uri)
+  {
+    var result = await Http.GetStringAsync(uri);
+    return result;
+  }
   protected void DisplayFileContents(string fileContents)
   {
     Html = (MarkupString)Markdown.ToHtml(fileContents);
   }
 
-  private static string path = @"C:/00_ElevenFifty/SD_Training/BlazorGitHubPagesDemo/wwwroot/md-assets/main.md";
-  static string contents = File.ReadAllText(path);
-
-  protected override void OnInitialized()
+  protected override async Task OnInitializedAsync()
   {
-    DisplayFileContents(contents);
+    try
+    {
+      var contents = await GetFileContentsAsync(path);
+      DisplayFileContents(contents);
+    }
+    catch (System.Exception x)
+    {
+      Html = (MarkupString)x.Message;
+    }
   }
-
 }
